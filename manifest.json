@@ -2,7 +2,7 @@
   "name": "To-Do List",
   "short_name": "To-Do",
   "description": "Aplikasi To-Do List berbasis PWA",
-  "start_url": "/todolist/",
+  "start_url": "/todolist/index.html",
   "scope": "/todolist/",
   "display": "standalone",
   "background_color": "#ffcccc",
