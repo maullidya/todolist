@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do List</h1>
+        <button id="toggle-theme">🌙</button>
+        <div class="controls">
+       
+<div class="filters">
+    <select id="taskFilter" onchange="filterTasks(this.value)">
+        <option value="all">Semua</option>
+        <option value="completed">Selesai</option>
+        <option value="pending">Belum Selesai</option>
+    </select>
+</div>
+
+<a href="add.html">
+    <button class="btn btn-primary">+Tambah </button>
+</a>
+</div>
+        
+        <ul id="taskList"></ul>
+    </div>
+    <br>
+    <button id="installBtn" class="install-button">
+        📥 Install App
+    </button>
+    <script src="db.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

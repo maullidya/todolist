@@ -1,0 +1,22 @@
+{
+  "name": "To-Do List",
+  "short_name": "To-Do",
+  "description": "Aplikasi To-Do List berbasis PWA",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#ffcccc",
+  "theme_color": "#ff66a3",
+  "icons": [
+    {
+      "src": "icons/logo-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/logo-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "form_factor": "wide"
+}
