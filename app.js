@@ -111,6 +111,20 @@ document.getElementById("installBtn").addEventListener("click", () => {
     }
 });
 
+window.addEventListener("load", function () {
+    let installBtn = document.getElementById("installBtn"); // Ganti dengan ID tombol Anda
+
+    // Periksa apakah aplikasi sudah terinstal
+    window.matchMedia("(display-mode: standalone)").matches ? installButton.style.display = "none" : null;
+
+    // Event listener untuk mendeteksi jika aplikasi sudah diinstal
+    window.addEventListener("appinstalled", () => {
+        console.log("Aplikasi sudah diinstal");
+        installButton.style.display = "none"; // Sembunyikan tombol
+    });
+});
+
+
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/service-worker.js")
         .then(() => console.log("Service Worker registered"))
