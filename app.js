@@ -137,16 +137,3 @@ if ("serviceWorker" in navigator) {
         .catch((error) => console.log("Service Worker registration failed:", error));
 }
 
-window.onload = function () {
-    if (window.history && window.history.pushState) {
-        window.history.pushState(null, null, window.location.href);
-        window.onpopstate = function () {
-            window.history.pushState(null, null, window.location.href);
-            // Opsional: Tambahkan konfirmasi sebelum keluar
-            if (confirm("Apakah Anda ingin keluar dari aplikasi?")) {
-                window.close(); // Mencoba menutup jendela (tidak semua browser mendukung)
-            }
-        };
-    }
-};
-
