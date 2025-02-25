@@ -89,40 +89,46 @@ document.getElementById("toggle-theme").onclick = () => {
     }
 };
 
-let deferredPrompt;
-
-window.addEventListener("beforeinstallprompt", (event) => {
-    event.preventDefault();
-    deferredPrompt = event;
-    document.getElementById("installBtn").style.display = "block";
-});
-
-document.getElementById("installBtn").addEventListener("click", () => {
-    if (deferredPrompt) {
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then((choice) => {
-            if (choice.outcome === "accepted") {
-                console.log("User installed the PWA");
-            } else {
-                console.log("User dismissed the install prompt");
-            }
-            deferredPrompt = null;
-        });
-    }
-});
-
-window.addEventListener("load", function () {
-    let installBtn = document.getElementById("installBtn"); // Ganti dengan ID tombol Anda
+window.addEventListener('load', function () {
+    let installButton = document.getElementById('installBtn'); // Ganti dengan ID tombol Anda
 
     // Periksa apakah aplikasi sudah terinstal
-    window.matchMedia("(display-mode: standalone)").matches ? installButton.style.display = "none" : null;
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+        installButton.style.display = 'none';
+    }
 
-    // Event listener untuk mendeteksi jika aplikasi sudah diinstal
-    window.addEventListener("appinstalled", () => {
-        console.log("Aplikasi sudah diinstal");
-        installButton.style.display = "none"; // Sembunyikan tombol
+    // Simpan event sebelum prompt instalasi
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        // Tampilkan tombol instalasi
+        installButton.style.display = 'block';
+
+        installButton.addEventListener('click', () => {
+            // Sembunyikan tombol instalasi
+            installButton.style.display = 'none';
+            // Tampilkan prompt instalasi
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('Pengguna menerima prompt instalasi');
+                } else {
+                    console.log('Pengguna menolak prompt instalasi');
+                }
+                deferredPrompt = null;
+            });
+        });
+    });
+
+    // Event yang terpicu saat aplikasi terinstal
+    window.addEventListener('appinstalled', () => {
+        console.log('Aplikasi telah terinstal');
+        // Sembunyikan tombol instalasi
+        installButton.style.display = 'none';
     });
 });
+
 
 
 if ("serviceWorker" in navigator) {
@@ -131,13 +137,16 @@ if ("serviceWorker" in navigator) {
         .catch((error) => console.log("Service Worker registration failed:", error));
 }
 
-window.addEventListener("popstate", function (event) {
-    if (window.location.pathname === "/index.html" || window.location.pathname === "/") {
-        if (confirm("Keluar dari aplikasi?")) {
-            navigator.app.exitApp(); // Untuk Android
-        } else {
-            history.pushState(null, null, location.href);
-        }
+window.onload = function () {
+    if (window.history && window.history.pushState) {
+        window.history.pushState(null, null, window.location.href);
+        window.onpopstate = function () {
+            window.history.pushState(null, null, window.location.href);
+            // Opsional: Tambahkan konfirmasi sebelum keluar
+            if (confirm("Apakah Anda ingin keluar dari aplikasi?")) {
+                window.close(); // Mencoba menutup jendela (tidak semua browser mendukung)
+            }
+        };
     }
-});
+};
 
