@@ -116,3 +116,14 @@ if ("serviceWorker" in navigator) {
         .then(() => console.log("Service Worker registered"))
         .catch((error) => console.log("Service Worker registration failed:", error));
 }
+
+window.addEventListener("popstate", function (event) {
+    if (window.location.pathname === "/index.html" || window.location.pathname === "/") {
+        if (confirm("Keluar dari aplikasi?")) {
+            navigator.app.exitApp(); // Untuk Android
+        } else {
+            history.pushState(null, null, location.href);
+        }
+    }
+});
+
